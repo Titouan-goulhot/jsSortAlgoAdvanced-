@@ -61,8 +61,30 @@ function getArrayCsv(csv) {
  * @returns la distance qui sépare la ville de Grenoble
  */
 function distanceFromGrenoble(ville) {
-    console.log('implement me !');
-    return 0;
+
+    // Latitude et longitude de Grenoble.
+    const lat1 = 45.188529;
+    const lon1 = 5.724524;
+
+    // latitiude et longitude de l'objet ville
+    const lat2 = ville.latitude;
+    const lon2 = ville.longitude;
+
+    const R = 6371e3; // metres
+    const φ1 = lat1 * Math.PI / 180; // φ, λ in radians
+    const φ2 = lat2 * Math.PI / 180;
+    const Δφ = (lat2 - lat1) * Math.PI / 180;
+    const Δλ = (lon2 - lon1) * Math.PI / 180;
+
+    const a = Math.sin(Δφ / 2) * Math.sin(Δφ / 2) +
+        Math.cos(φ1) * Math.cos(φ2) *
+        Math.sin(Δλ / 2) * Math.sin(Δλ / 2);
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+
+    const d = R * c; // in metres
+
+    console.log('result of distanceFromGrenoble : ', d);
+    return d;
 }
 
 /**
@@ -73,8 +95,14 @@ function distanceFromGrenoble(ville) {
  * @return vrai si la ville i est plus proche
  */
 function isLess(i, j) {
-    console.log('implement me !');
-    return true;
+
+    if (i.distanceFromGrenoble < j.distanceFromGrenoble) {
+
+        return true;
+    } else {
+        return false;
+    }
+    console.log('isLess Result : ');
 }
 
 /**
@@ -82,20 +110,28 @@ function isLess(i, j) {
  * @param {*} i 
  * @param {*} j 
  */
-function swap(i, j) {
-    console.log('implement me !');
+function swap(i, j, listVille) {
+
+    var temporary = listVille[i];
+    listVille[i] = listVille[j];
+    listVille[j] = temporary;
+
+    nbPermutation++;
+
+    console.log('Swap Result : ');
+
 }
 
 function sort(type) {
     switch (type) {
         case 'insert':
-            insertsort();
+            insertsort(listVille);
             break;
         case 'select':
-            selectionsort();
+            selectionsort(listVille);
             break;
         case 'bubble':
-            bubblesort();
+            bubblesort(listVille);
             break;
         case 'shell':
             shellsort();
@@ -112,17 +148,54 @@ function sort(type) {
     }
 }
 
-function insertsort() {
-    console.log("insertsort - implement me !");
-}
+function insertsort(listVille) {
 
-function selectionsort() {
-    console.log("selectionsort - implement me !");
-}
+    for (var i = 1; i < listVille.length; i++) {
+        var temporary = listVille[i];
+        var j = i;
+        while (j > 0 && isLess(temporary, listVille[j - 1])) {
+            // listVille[j + 1] = listVille[j];
+            swap(j, j - 1, listVille)
+            j = j - 1;
+        }
+        listVille[j] = temporary;
+    }
+    return listVille;
+};
+console.log("insertsort - ", insertsort(listVille));
 
-function bubblesort() {
-    console.log("bubblesort - implement me !");
+
+function selectionsort(listVille) {
+
+    for (var i = 0; i < listVille.length; i++) {
+        var index_min = i;
+        for (var j = i + 1; j < listVille.length; j++) {
+            if (!isLess(listVille[index_min], listVille[j])) {
+                index_min = j;
+            }
+        }
+        swap(i, index_min, listVille)
+    }
+    return listVille;
 }
+console.log("selectionsort - ", selectionsort(listVille));
+
+function bubblesort(listVille) {
+    var permute;
+
+    do {
+        permute = false;
+        for (var i = 0; i < listVille.length; i++) {
+            if (isLess(listVille[i], listVille[i + 1])) {
+                swap(listVille[i], listVille[i + 1], listVille)
+                permute = true;
+            }
+        }
+    } while (permute);
+    return listVille;
+};
+console.log("bubblesort - ", bubblesort(listVille));
+
 
 function shellsort() {
     console.log("shellsort - implement me !");
