@@ -63,8 +63,8 @@ function getArrayCsv(csv) {
 function distanceFromGrenoble(ville) {
 
     // Latitude et longitude de Grenoble.
-    const lat1 = 45.188529;
-    const lon1 = 5.724524;
+    const lat1 = 45.166667;
+    const lon1 = 5.716667;
 
     // latitiude et longitude de l'objet ville
     const lat2 = ville.latitude;
@@ -111,7 +111,7 @@ function isLess(i, j) {
  * @param {*} j 
  */
 function swap(i, j, listVille) {
-
+    //  
     var temporary = listVille[i];
     listVille[i] = listVille[j];
     listVille[j] = temporary;
@@ -143,7 +143,7 @@ function sort(type) {
             heapsort();
             break;
         case 'quick':
-            quicksort();
+            quicksort(0, listVille.length - 1);
             break;
     }
 }
@@ -181,17 +181,21 @@ function selectionsort(listVille) {
 console.log("selectionsort - ", selectionsort(listVille));
 
 function bubblesort(listVille) {
-    var permute;
+    var passage = 0
+    var permute = true;
 
-    do {
-        permute = false;
-        for (var i = 0; i < listVille.length; i++) {
-            if (isLess(listVille[i], listVille[i + 1])) {
-                swap(listVille[i], listVille[i + 1], listVille)
+    while (permute === true) {
+        permute = false
+        for (var i = 0; i < listVille.length - 1; i++) {
+            if (isLess(listVille[i + 1], listVille[i])) {
+                swap(i, i + 1, listVille)
                 permute = true;
             }
         }
-    } while (permute);
+
+        passage = passage + 1;
+    }
+
     return listVille;
 };
 console.log("bubblesort - ", bubblesort(listVille));
@@ -202,17 +206,76 @@ function shellsort() {
 }
 
 function mergesort() {
-    console.log("mergesort - implement me !");
+    listVille = tri_fusion(listVille);
+
 }
+
+function tri_fusion(listVille) {
+    let gauche = listVille.slice(0, listVille.length / 2);
+    let droite = listVille.slice(listVille.length / 2);
+
+    if (listVille.length <= 1) {
+        return listVille;
+    } else {
+        return fusion(tri_fusion(gauche), tri_fusion(droite));
+    }
+}
+
+function fusion(gauche, droite) {
+
+    if (gauche.length == 0) {
+        return droite;
+
+    }
+    if (droite.length == 0) {
+        return gauche;
+    }
+    nbPermutation++;
+
+    if (isLess(gauche[0], droite[0])) {
+        return [gauche.shift()].concat(fusion(gauche, droite));
+    } else {
+        return [droite.shift()].concat(fusion(gauche, droite));
+    }
+}
+console.log("mergesort - : ", mergesort());
+
 
 
 function heapsort() {
     console.log("heapsort - implement me !");
 }
 
-function quicksort() {
-    console.log("quicksort - implement me !");
+function quicksort(first, last) {
+    if (first < last) {
+        var pi = partition(first, last);
+
+        quicksort(first, pi - 1);
+
+        quicksort(pi + 1, last);
+
+    }
+
+    return listVille;
+
+
 }
+function partition(first, last) {
+
+    pivot = listVille[last];
+    j = first;
+    for (i = first; i <= last - 1; i++) {
+        if (isLess(listVille[i], pivot)) {
+            swap(i, j, listVille)
+            j = j + 1
+        }
+    }
+    swap(last, j, listVille);
+
+    return j;
+}
+
+console.log("quicksort - ", quicksort(0, listVille.length - 1));
 
 /** MODEL */
 
@@ -243,3 +306,4 @@ function displayListVille() {
         mainList.appendChild(elem);
     }
 }
+
