@@ -34,7 +34,7 @@
             var cellDiv = document.createElement("div");
             cellDiv.id = "x" + cell.posX + "y" + cell.posY;
             container.appendChild(cellDiv);
-            document.getElementById("x0y0").style.backgroundColor = "#400044";
+
             // console.log(container)
             // console.log(cell)
 
@@ -44,14 +44,14 @@
                 if (cell.walls[j]) {
                     if (j == 0) {
                         //  ordre des murs = H, D, B, G
-                        cellDiv.style.borderTop = "solid #0000FF"
+                        cellDiv.style.borderTop = "solid #000000"
 
                     } else if (j == 1) {
-                        cellDiv.style.borderRight = "solid #0000FF"
+                        cellDiv.style.borderRight = "solid #000000"
                     } else if (j == 2) {
-                        cellDiv.style.borderBottom = "solid #0000FF"
+                        cellDiv.style.borderBottom = "solid #000000"
                     } else if (j == 3) {
-                        cellDiv.style.borderLeft = "solid #0000FF"
+                        cellDiv.style.borderLeft = "solid #000000"
                     }
 
                 }
@@ -65,12 +65,25 @@
 
         });
 
+        // affichage du point de départ & celui de l'arrivée.
+        var start = document.getElementById("x0y0");
+        start.style.backgroundColor = "#400044";
+        var finish = document.getElementById("x4y4");
+        finish.style.backgroundColor = "#ff0909";
+
+
+
+
+    }
+
+    function play() {
+
 
 
     }
 
     grid(document.body);
-        // console.log(donnee)
+    // console.log(donnee)
 </script>
 
 </html>
