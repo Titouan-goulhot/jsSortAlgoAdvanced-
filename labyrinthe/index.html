@@ -8,44 +8,69 @@
     <script src="labyrinthe.js"></script>
     <link rel="stylesheet" href="style.css">
 </head>
-<script src="donneeJSON.js"></script>
-<title>Document</title>
+<script src="exemple.js"></script>
+<title>Generate a Maze</title>
 </head>
 
 <body>
 
     <h1>This is a new Maze</h1>
-    <div class="grid-container">
-        <div class="cell"></div>
-        <div class="cell"></div>
-        <div class="cell"></div>
-        <div class="cell"></div>
-        <div class="cell"></div>
-        <div class="cell"></div>
-        <div class="cell"></div>
-        <div class="cell"></div>
-        <div class="cell"></div>
-        <div class="cell"></div>
-        <div class="cell"></div>
-        <div class="cell"></div>
-        <div class="cell"></div>
-        <div class="cell"></div>
-        <div class="cell"></div>
-        <div class="cell"></div>
-        <div class="cell"></div>
-        <div class="cell"></div>
-        <div class="cell"></div>
-        <div class="cell"></div>
-        <div class="cell"></div>
-        <div class="cell"></div>
-        <div class="cell"></div>
-        <div class="cell"></div>
-        <div class="cell"></div>
+
+    <div id="container">
+
     </div>
 
-    <script>
-
-    </script>
 </body>
+<script>
+
+    // Fonction création d'un labyrinthe.
+    function grid(maze) {
+
+        var container = document.getElementById("container");
+
+        // Faire apparaitre un tableau avec ses cellules.
+
+        exemple.forEach(cell => {
+            var cellDiv = document.createElement("div");
+            cellDiv.id = "x" + cell.posX + "y" + cell.posY;
+            container.appendChild(cellDiv);
+            document.getElementById("x0y0").style.backgroundColor = "#400044";
+            // console.log(container)
+            // console.log(cell)
+
+            for (j = 0; j < cell.walls.length; j++) {
+
+
+                if (cell.walls[j]) {
+                    if (j == 0) {
+                        //  ordre des murs = H, D, B, G
+                        cellDiv.style.borderTop = "solid #0000FF"
+
+                    } else if (j == 1) {
+                        cellDiv.style.borderRight = "solid #0000FF"
+                    } else if (j == 2) {
+                        cellDiv.style.borderBottom = "solid #0000FF"
+                    } else if (j == 3) {
+                        cellDiv.style.borderLeft = "solid #0000FF"
+                    }
+
+                }
+
+
+                console.log(cell.walls[j])
+            };
+
+
+
+
+        });
+
+
+
+    }
+
+    grid(document.body);
+        // console.log(donnee)
+</script>
 
 </html>
