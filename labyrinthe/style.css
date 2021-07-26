@@ -1,0 +1,21 @@
+body{
+    margin: 0;
+  }
+  
+  .grid-container {
+    height: 90vh;
+    margin: 2rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    border: solid;
+    }
+    .cell{
+      color: rgb(0, 0, 0);
+      font-size: 3rem;
+      padding: 4rem;
+      border: solid;
+    }
+  
+    h1{
+      text-align: center;
+    }
