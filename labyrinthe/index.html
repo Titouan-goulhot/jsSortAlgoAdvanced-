@@ -21,10 +21,13 @@
     </div>
 
 </body>
+
 <script>
+    // ________________________________________________________________________________SCRIPT____________________________________________________________________________
+    // ________________________________________________________________________________Fonction GRID____________________________________________________________________________
 
     // Fonction création d'un labyrinthe.
-    function grid(maze) {
+    function grid() {
 
         var container = document.getElementById("container");
 
@@ -39,8 +42,6 @@
             // console.log(cell)
 
             for (j = 0; j < cell.walls.length; j++) {
-
-
                 if (cell.walls[j]) {
                     if (j == 0) {
                         //  ordre des murs = H, D, B, G
@@ -55,35 +56,119 @@
                     }
 
                 }
-
-
-                console.log(cell.walls[j])
+                // console.log(cell.walls[j])
             };
-
-
-
-
         });
+        // ________________________________________________________________________________Affichage : DEPART & ARRIVEE____________________________________________________________________________
 
         // affichage du point de départ & celui de l'arrivée.
         var start = document.getElementById("x0y0");
         start.style.backgroundColor = "#400044";
         var finish = document.getElementById("x4y4");
         finish.style.backgroundColor = "#ff0909";
-
-
-
-
-    }
-
-    function play() {
-
+        // _________________________________________________________________________________________________________________________________________________________________________
 
 
     }
-
     grid(document.body);
-    // console.log(donnee)
+    // console.log(exemple)
+    // ________________________________________________________________________________BFS____________________________________________________________________________
+
+    function BFS() { // Utilisation du .shift()
+
+    };
+
+
+
+    var currentPosition = exemple[0];
+
+    currentPosition = exemple.find(element => element.posX == currentPosition.posX && element.posY == currentPosition.posY)
+
+    // console.log("  position de X : " + currentPosition.posX + "  position de Y : " + currentPosition.posY + 1)
+    console.log(currentPosition)
+
+
+    // ________________________________________________________________________________GET NEIGHBOURS____________________________________________________________________________
+    function getNeighbour(posX, posY) {
+        let neighbours = []
+        const currentPosition = exemple.find(el => el.posX === posX && el.posY === posY);
+        for (let i = 0; i < currentPosition.walls.length; i++) {
+            if (!currentPosition.walls[i]) {
+                if (i === 0) {
+                    const x = currentPosition.posX
+                    const y = currentPosition.posY - 1
+                    const neighbour = exemple.find(el => el.posX === x && el.posY === y);
+                    neighbours.push(neighbour)
+                }
+                if (i === 1) {
+                    const x = currentPosition.posX + 1
+                    const y = currentPosition.posY
+                    const neighbour = exemple.find(el => el.posX === x && el.posY === y);
+                    neighbours.push(neighbour)
+                }
+                if (i === 2) {
+                    const x = currentPosition.posX
+                    const y = currentPosition.posY + 1
+                    const neighbour = exemple.find(el => el.posX === x && el.posY === y);
+                    neighbours.push(neighbour)
+                }
+                if (i === 3) {
+                    const x = currentPosition.posX - 1
+                    const y = currentPosition.posY
+                    const neighbour = exemple.find(el => el.posX === x && el.posY === y);
+                    neighbours.push(neighbour)
+                }
+            }
+        }
+        console.log(neighbours)
+        return neighbours
+
+    }
+    getNeighbour(0, 3);
+    // ________________________________________________________________________________DFS____________________________________________________________________________
+
+    function DFS(exemple, start) {
+        //     // Utiliser le posX & posY
+        var start = exemple[0, 0];
+        let stack = [];
+        stack.push(start);
+        var neighbours;
+
+        while (stack.length > 0) {
+            // .top retourne le derier élément de la pile (stack) 
+            currentPosition = stack.pop();
+            currentPosition.visited = true;
+
+            if (currentPosition.id === finish.id) {
+                console.log(stack);
+                return stack;
+            }
+
+
+
+            // for (neighbours) {
+            // }
+
+        }
+
+        // var unvisited = 0;
+        // currentPosition.forEach(function (id) {
+        //     var cell = getpositionById(exemple, id);
+        //     if (!cell.visited) {
+        //         stack.push(cell);
+        //         unvisited += 1;
+        //     }
+        // });
+
+        // if (unvisited === 0) {
+        //     stack.pop();
+        //     // console.log(DFS(document.body));
+        // }
+    }
+
+
+    // console.log(DFS(exemple))
+
 </script>
 
 </html>
