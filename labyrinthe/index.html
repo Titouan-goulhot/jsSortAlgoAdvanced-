@@ -72,11 +72,6 @@
     }
     grid(document.body);
     // console.log(exemple)
-    // ________________________________________________________________________________BFS____________________________________________________________________________
-
-    function BFS() { // Utilisation du .shift()
-
-    };
 
 
 
@@ -124,14 +119,14 @@
         return neighbours
 
     }
-    getNeighbour(0, 3);
+    getNeighbour(currentPosition.posX, currentPosition.posY);
     // ________________________________________________________________________________DFS____________________________________________________________________________
 
-    function DFS(exemple, start) {
+    function DFS(exemple, currentPosition) {
         //     // Utiliser le posX & posY
-        var start = exemple[0, 0];
+        var currentPosition = exemple[0];
         let stack = [];
-        stack.push(start);
+        stack.push(currentPosition);
         var neighbours;
 
         while (stack.length > 0) {
@@ -139,33 +134,36 @@
             currentPosition = stack.pop();
             currentPosition.visited = true;
 
-            if (currentPosition.id === finish.id) {
+            if (currentPosition === finish) {
                 console.log(stack);
                 return stack;
             }
 
-
-
-            // for (neighbours) {
-            // }
-
+            neighbours = getNeighbour(currentPosition.posX, currentPosition.posY)
+            for (let neighbour of neighbours) {
+                if (neighbour !== visited) {
+                    // neighbours.parentNode(neighbour);
+                    stack.push(neighbours);
+                }
+            }
+            console.log(neighbour)
+            return None
         }
 
-        // var unvisited = 0;
-        // currentPosition.forEach(function (id) {
-        //     var cell = getpositionById(exemple, id);
-        //     if (!cell.visited) {
-        //         stack.push(cell);
-        //         unvisited += 1;
-        //     }
-        // });
-
-        // if (unvisited === 0) {
-        //     stack.pop();
-        //     // console.log(DFS(document.body));
-        // }
     }
 
+    // ________________________________________________________________________________BFS____________________________________________________________________________
+
+    function BFS() { // Utilisation du .shift()
+
+    };
+
+    function colorPosition(posX, posY) {
+
+        var position = document.getElementById(posX + "." + posY)
+
+        position.style.backgroundColor = "#ffAc3359";
+    }
 
     // console.log(DFS(exemple))
 
