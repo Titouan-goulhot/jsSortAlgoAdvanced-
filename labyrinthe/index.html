@@ -141,8 +141,7 @@
             currentPosition = stack.pop();
             currentPosition.visited = true;
 
-
-
+            colorPosition(currentPosition.posX, currentPosition.posY)
             if (currentPosition.posX === finish.posX && currentPosition.posY === finish.posY) {
                 // console.log(stack);
                 return stack;
@@ -150,8 +149,9 @@
 
             neighbours = getNeighbour(currentPosition.posX, currentPosition.posY)
             for (let neighbour of neighbours) {
+
                 if (neighbour !== currentPosition.visited) {
-                    // neighbours.parentNode(neighbour);
+
                     stack.push(neighbour);
                 }
             }
@@ -161,25 +161,58 @@
 
     }
 
-    DFS(exemple)
+    // DFS(exemple)
 
     // ________________________________________________________________________________BFS____________________________________________________________________________
 
-    function BFS() { // Utilisation du .shift()
+    function BFS(exemple) { // Utilisation du .shift()
+        // Utiliser le posX & posY
+        var currentPosition = exemple[0];
+        let queue = [];
+        queue.push(currentPosition);
+        var neighbours;
+        var finish = exemple[exemple.length - 1];
+        currentPosition.visited = false;
+        // Récupérer l'Id des div pour les faire concorder avec la currentPosition
+        // currentPosition.id = cellDiv.id
 
+        while (queue.length > 0) {
+
+            currentPosition = queue.shift();
+            currentPosition.visited = true;
+
+
+            colorPosition(currentPosition.posX, currentPosition.posY)
+            if (currentPosition.posX === finish.posX && currentPosition.posY === finish.posY) {
+                // console.log(queue);
+                return queue;
+            }
+
+            neighbours = getNeighbour(currentPosition.posX, currentPosition.posY)
+            for (let neighbour of neighbours) {
+
+                if (neighbour !== currentPosition.visited) {
+
+                    queue.push(neighbour);
+                }
+            }
+            console.log(currentPosition)
+
+        }
     };
 
+    BFS(exemple)
 
+    // ________________________________________________________________________________COLOR_POSITION____________________________________________________________________________
 
     function colorPosition(posX, posY) {
 
-        var position = document.getElementById(posX + "." + posY)
+        var position = document.getElementById("x" + posX + "y" + posY)
 
         position.style.backgroundColor = "#ffAc3359";
     }
 
 
-    // console.log(DFS(exemple))
 
 </script>
 
