@@ -201,9 +201,32 @@ function bubblesort(listVille) {
 console.log("bubblesort - ", bubblesort(listVille));
 
 
-function shellsort() {
-    console.log("shellsort - implement me !");
+function shellsort(listVille, interval) {
+
+    // Calculer l'interval
+    while (interval < listVille.length) {
+
+        interval = interval * 3 + 1
+    }
+    while (interval !== 0) {
+
+        interval = interval / 3
+
+        for (i = interval; i < listVille.length; i++) {
+            var j = i;
+            swap(i, j, listVille)
+
+            while (j > interval - 1 && listVille[j - interval] > temporary) {
+                listVille[j] = listVille[j - interval];
+                j = j - interval;
+            }
+            listVille[j] = temporary;
+        }
+    }
+    return listVille;
 }
+
+console.log("shellsort - ", shellsort(listVille, 3));
 
 function mergesort() {
     listVille = tri_fusion(listVille);
