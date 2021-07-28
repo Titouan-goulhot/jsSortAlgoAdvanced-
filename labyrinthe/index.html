@@ -8,7 +8,7 @@
     <script src="labyrinthe.js"></script>
     <link rel="stylesheet" href="style.css">
 </head>
-<script src="exemple.js"></script>
+<script src="data.js"></script>
 <title>Generate a Maze</title>
 </head>
 
@@ -16,10 +16,10 @@
 
     <h1>This is a new Maze</h1>
 
+
     <div id="container">
 
     </div>
-
 </body>
 
 <script>
@@ -66,7 +66,7 @@
         // affichage du point de départ & celui de l'arrivée.
         var start = document.getElementById("x0y0");
         start.style.backgroundColor = "#400044";
-        var finish = document.getElementById("x4y4");
+        var finish = document.getElementById("x9y9");
         finish.style.backgroundColor = "#ff0909";
         // _________________________________________________________________________________________________________________________________________________________________________
 
@@ -125,7 +125,7 @@
     // getNeighbour(currentPosition.posX, currentPosition.posY);
     // ________________________________________________________________________________DFS____________________________________________________________________________
 
-    function DFS(exemple) {
+    async function DFS(exemple) {
         // Utiliser le posX & posY
         var currentPosition = exemple[0];
         let stack = [];
@@ -140,8 +140,8 @@
 
             currentPosition = stack.pop();
             currentPosition.visited = true;
-
-            colorPosition(currentPosition.posX, currentPosition.posY)
+            await sleep(200)
+            colorPosition(currentPosition.posX, currentPosition.posY);
             if (currentPosition.posX === finish.posX && currentPosition.posY === finish.posY) {
                 // console.log(stack);
                 return stack;
@@ -161,11 +161,11 @@
 
     }
 
-    // DFS(exemple)
+    DFS(exemple)
 
     // ________________________________________________________________________________BFS____________________________________________________________________________
 
-    function BFS(exemple) { // Utilisation du .shift()
+    async function BFS(exemple) { // Utilisation du .shift()
         // Utiliser le posX & posY
         var currentPosition = exemple[0];
         let queue = [];
@@ -173,15 +173,13 @@
         var neighbours;
         var finish = exemple[exemple.length - 1];
         currentPosition.visited = false;
-        // Récupérer l'Id des div pour les faire concorder avec la currentPosition
-        // currentPosition.id = cellDiv.id
 
         while (queue.length > 0) {
 
             currentPosition = queue.shift();
             currentPosition.visited = true;
 
-
+            await sleep(200)
             colorPosition(currentPosition.posX, currentPosition.posY)
             if (currentPosition.posX === finish.posX && currentPosition.posY === finish.posY) {
                 // console.log(queue);
@@ -201,7 +199,7 @@
         }
     };
 
-    BFS(exemple)
+    // BFS(exemple)
 
     // ________________________________________________________________________________COLOR_POSITION____________________________________________________________________________
 
@@ -211,8 +209,11 @@
 
         position.style.backgroundColor = "#ffAc3359";
     }
+    // ________________________________________________________________________________Fonction SLEEP____________________________________________________________________________
 
-
+    function sleep(ms) {
+        return new Promise(resolve => setTimeout(resolve, ms));
+    }
 
 </script>
 
