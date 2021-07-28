@@ -37,7 +37,9 @@
             var cellDiv = document.createElement("div");
             cellDiv.id = "x" + cell.posX + "y" + cell.posY;
             container.appendChild(cellDiv);
-
+            // style pour labyrinthe carré
+            // cellDiv.style.width = "100px";
+            // cellDiv.style.height = "100px";
             // console.log(container)
             // console.log(cell)
 
@@ -74,83 +76,92 @@
     // console.log(exemple)
 
 
-
-    var currentPosition = exemple[0];
-
-    currentPosition = exemple.find(element => element.posX == currentPosition.posX && element.posY == currentPosition.posY)
-
     // console.log("  position de X : " + currentPosition.posX + "  position de Y : " + currentPosition.posY + 1)
-    console.log(currentPosition)
+    // console.log(currentPosition)
 
 
     // ________________________________________________________________________________GET NEIGHBOURS____________________________________________________________________________
     function getNeighbour(posX, posY) {
         let neighbours = []
+
         const currentPosition = exemple.find(el => el.posX === posX && el.posY === posY);
         for (let i = 0; i < currentPosition.walls.length; i++) {
+            let neighbour;
             if (!currentPosition.walls[i]) {
                 if (i === 0) {
                     const x = currentPosition.posX
                     const y = currentPosition.posY - 1
-                    const neighbour = exemple.find(el => el.posX === x && el.posY === y);
-                    neighbours.push(neighbour)
+                    neighbour = exemple.find(el => el.posX === x && el.posY === y);
+
                 }
                 if (i === 1) {
                     const x = currentPosition.posX + 1
                     const y = currentPosition.posY
-                    const neighbour = exemple.find(el => el.posX === x && el.posY === y);
-                    neighbours.push(neighbour)
+                    neighbour = exemple.find(el => el.posX === x && el.posY === y);
+
                 }
                 if (i === 2) {
                     const x = currentPosition.posX
                     const y = currentPosition.posY + 1
-                    const neighbour = exemple.find(el => el.posX === x && el.posY === y);
-                    neighbours.push(neighbour)
+                    neighbour = exemple.find(el => el.posX === x && el.posY === y);
+
                 }
                 if (i === 3) {
                     const x = currentPosition.posX - 1
                     const y = currentPosition.posY
-                    const neighbour = exemple.find(el => el.posX === x && el.posY === y);
+                    neighbour = exemple.find(el => el.posX === x && el.posY === y);
+
+                }
+                if (!neighbour.visited) {
+
                     neighbours.push(neighbour)
                 }
             }
         }
-        console.log(neighbours)
+        // console.log(neighbours)
         return neighbours
 
     }
-    getNeighbour(currentPosition.posX, currentPosition.posY);
+    // getNeighbour(currentPosition.posX, currentPosition.posY);
     // ________________________________________________________________________________DFS____________________________________________________________________________
 
-    function DFS(exemple, currentPosition) {
-        //     // Utiliser le posX & posY
+    function DFS(exemple) {
+        // Utiliser le posX & posY
         var currentPosition = exemple[0];
         let stack = [];
         stack.push(currentPosition);
         var neighbours;
+        var finish = exemple[exemple.length - 1];
+        currentPosition.visited = false;
+        // Récupérer l'Id des div pour les faire concorder avec la currentPosition
+        // currentPosition.id = cellDiv.id
 
         while (stack.length > 0) {
-            // .top retourne le derier élément de la pile (stack) 
+
             currentPosition = stack.pop();
             currentPosition.visited = true;
 
-            if (currentPosition === finish) {
-                console.log(stack);
+
+
+            if (currentPosition.posX === finish.posX && currentPosition.posY === finish.posY) {
+                // console.log(stack);
                 return stack;
             }
 
             neighbours = getNeighbour(currentPosition.posX, currentPosition.posY)
             for (let neighbour of neighbours) {
-                if (neighbour !== visited) {
+                if (neighbour !== currentPosition.visited) {
                     // neighbours.parentNode(neighbour);
-                    stack.push(neighbours);
+                    stack.push(neighbour);
                 }
             }
-            console.log(neighbour)
-            return None
+            console.log(currentPosition)
+
         }
 
     }
+
+    DFS(exemple)
 
     // ________________________________________________________________________________BFS____________________________________________________________________________
 
@@ -158,12 +169,15 @@
 
     };
 
+
+
     function colorPosition(posX, posY) {
 
         var position = document.getElementById(posX + "." + posY)
 
         position.style.backgroundColor = "#ffAc3359";
     }
+
 
     // console.log(DFS(exemple))
 
